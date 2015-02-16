@@ -111,10 +111,10 @@ public class PolishNotation {
 		while (!stack.isEmpty())
 			queue.push(stack.pop());
 
-		String postfix = "";
+		String prefix = "";
 		while (!queue.isEmpty())
-			postfix += queue.pop() + " ";
-		return postfix.trim();
+			prefix += queue.pop() + " ";
+		return prefix.trim();
 	}
 
 	private static String infixToPostfix(String[] infix) {
