@@ -1,2 +1,2 @@
 # Algorithms
-Template files for popular algorithms.
+Template files for common algorithms.
