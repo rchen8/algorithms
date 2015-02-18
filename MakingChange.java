@@ -13,9 +13,9 @@ public class MakingChange {
 			for (int j = 0; j < coins.length; j++) {
 				if (coins[j] > i)
 					continue;
-				else if (coins[j] == 1)
+				if (coins[j] == 1)
 					one = true;
-				else if (best[i - coins[j]] + 1 < minCoins) {
+				if (best[i - coins[j]] + 1 < minCoins) {
 					minCoins = best[i - coins[j]] + 1;
 					newCoin = coins[j];
 				}
