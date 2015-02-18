@@ -1,5 +1,3 @@
-import java.util.Arrays;
-
 public class Knapsack {
 
 	private static void knapsackUnbounded(int[] value, int[] weight, int n) {
@@ -20,8 +18,10 @@ public class Knapsack {
 			used[i] = item;
 		}
 
-		System.out.println(Arrays.toString(best));
-		System.out.println(Arrays.toString(used));
+		System.out.println(best[n]);
+		for (int i = n; i > 0; i -= weight[used[i]])
+			System.out.print(used[i] + " ");
+		System.out.println();
 	}
 
 	private static void knapsack01(int[] value, int[] weight, int n) {
@@ -42,9 +42,13 @@ public class Knapsack {
 			}
 		}
 
-		for (int[] i : best)
-			System.out.println(Arrays.toString(i));
-		System.out.println(Arrays.toString(used));
+		System.out.println(best[weight.length][n]);
+		for (int i = n; i > 0; i -= weight[used[i] - 1]) {
+			while (i > 0 && best[weight.length][i] == best[weight.length][i - 1])
+				i--;
+			System.out.print(used[i] + " ");
+		}
+		System.out.println();
 	}
 
 	public static void main(String[] args) {
