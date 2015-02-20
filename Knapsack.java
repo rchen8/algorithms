@@ -43,11 +43,6 @@ public class Knapsack {
 		}
 
 		System.out.println(best[weight.length][n]);
-		for (int i = n; i > 0; i -= weight[used[i] - 1]) {
-			while (i > 0 && best[weight.length][i] == best[weight.length][i - 1])
-				i--;
-			System.out.print(used[i] + " ");
-		}
 		System.out.println();
 	}
 
