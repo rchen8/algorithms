@@ -50,10 +50,10 @@ public class KnuthMorrisPratt {
 	}
 
 	public static void main(String[] args) {
-		char[] s = "whatthemomooofun".toCharArray();
-		char[] t = "moo".toCharArray();
+		char[] s = "ABC ABCDAB ABCDABCDABDE".toCharArray();
+		char[] w = "ABCDABD".toCharArray();
 
-		System.out.println(kmp_search(s, t));
+		System.out.println(kmp_search(s, w));
 	}
 
 }
