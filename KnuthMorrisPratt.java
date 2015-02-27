@@ -46,7 +46,7 @@ public class KnuthMorrisPratt {
 		}
 
 		// if we reach here, we have searched all of s unsuccessfully
-		return s.length;
+		return -1;
 	}
 
 	public static void main(String[] args) {
