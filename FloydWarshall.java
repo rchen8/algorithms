@@ -3,25 +3,25 @@ import java.util.Arrays;
 public class FloydWarshall {
 
 	public static void main(String[] args) {
-		final int n = 4;
-		int[][] data = { { 0, 2, -2 }, { 2, 3, 2 }, { 3, 1, -1 }, { 1, 0, 4 },
+		int vertices = 4;
+		int[][] edges = { { 0, 2, -2 }, { 2, 3, 2 }, { 3, 1, -1 }, { 1, 0, 4 },
 				{ 1, 2, 3 } };
 
-		int[][] dist = new int[n][n];
-		int[][] next = new int[n][n];
-		for (int i = 0; i < n; i++)
+		int[][] dist = new int[vertices][vertices];
+		int[][] next = new int[vertices][vertices];
+		for (int i = 0; i < vertices; i++)
 			Arrays.fill(dist[i], 1 << 30);
 
-		for (int i = 0; i < data.length; i++) {
-			dist[data[i][0]][data[i][1]] = data[i][2];
-			next[data[i][0]][data[i][1]] = data[i][1];
+		for (int i = 0; i < edges.length; i++) {
+			dist[edges[i][0]][edges[i][1]] = edges[i][2];
+			next[edges[i][0]][edges[i][1]] = edges[i][1];
 		}
 
-		for (int k = 0; k < n; k++) {
-			for (int i = 0; i < n; i++) {
+		for (int k = 0; k < vertices; k++) {
+			for (int i = 0; i < vertices; i++) {
 				if (k == i)
 					continue;
-				for (int j = 0; j < n; j++) {
+				for (int j = 0; j < vertices; j++) {
 					if (k == j || i == j)
 						continue;
 					if (dist[i][k] + dist[k][j] < dist[i][j]) {
