@@ -3,20 +3,20 @@ import java.util.Arrays;
 public class Dijkstra {
 
 	public static void main(String[] args) {
-		final int n = 6;
-		int[][] edge = { { 1, 2, 7 }, { 1, 3, 9 }, { 1, 6, 14 }, { 2, 3, 10 },
-				{ 2, 4, 15 }, { 3, 4, 11 }, { 3, 6, 2 }, { 4, 5, 6 },
-				{ 5, 6, 9 } };
+		int vertices = 6;
+		int[][] edges = { { 0, 1, 7 }, { 0, 2, 9 }, { 0, 5, 14 }, { 1, 2, 10 },
+				{ 1, 3, 15 }, { 2, 3, 11 }, { 2, 5, 2 }, { 3, 4, 6 },
+				{ 4, 5, 9 } };
 
-		int[][] graph = new int[n][n];
-		for (int i = 0; i < edge.length; i++) {
-			graph[edge[i][0] - 1][edge[i][1] - 1] = edge[i][2];
-			graph[edge[i][1] - 1][edge[i][0] - 1] = edge[i][2];
+		int[][] graph = new int[vertices][vertices];
+		for (int i = 0; i < edges.length; i++) {
+			graph[edges[i][0]][edges[i][1]] = edges[i][2];
+			graph[edges[i][1]][edges[i][0]] = edges[i][2];
 		}
 
-		int[] dist = new int[n];
-		int[] prev = new int[n];
-		boolean[] visited = new boolean[n];
+		int[] dist = new int[vertices];
+		int[] prev = new int[vertices];
+		boolean[] visited = new boolean[vertices];
 		Arrays.fill(dist, Integer.MAX_VALUE);
 		Arrays.fill(prev, -1);
 
@@ -26,7 +26,7 @@ public class Dijkstra {
 
 		while (!visited[target] && current != -1) {
 			int adj = -1, min = Integer.MAX_VALUE;
-			for (int i = 0; i < n; i++) {
+			for (int i = 0; i < vertices; i++) {
 				if (graph[current][i] == 0 || visited[i])
 					continue;
 
