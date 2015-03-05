@@ -10,7 +10,7 @@ public class FloydWarshall {
 		int[][] dist = new int[n][n];
 		int[][] next = new int[n][n];
 		for (int i = 0; i < n; i++)
-			Arrays.fill(dist[i], Short.MAX_VALUE);
+			Arrays.fill(dist[i], 1 << 30);
 
 		for (int i = 0; i < data.length; i++) {
 			dist[data[i][0]][data[i][1]] = data[i][2];
