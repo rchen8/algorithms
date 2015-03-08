@@ -24,7 +24,7 @@ public class ConvexHull {
 		});
 
 		// build lower hull
-		for (int i = 0; i < n; ++i) {
+		for (int i = 0; i < n; i++) {
 			while (k >= 2 && cross(hull[k - 2], hull[k - 1], pt[i]) <= 0)
 				k--;
 			hull[k++] = pt[i];
