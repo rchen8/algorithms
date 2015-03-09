@@ -53,7 +53,6 @@ public class ConvexHull {
 			pt[i] = new Point(data[i][0], data[i][1]);
 
 		Point[] hull = convexHull(pt);
-		for (int i = 0; i < hull.length; i++)
-			System.out.print(hull[i]);
+		System.out.println(Arrays.toString(hull));
 	}
 }
