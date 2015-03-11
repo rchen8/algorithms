@@ -3,47 +3,47 @@ import java.util.Arrays;
 public class LongestIncreasingSubsequence {
 
 	public static void main(String[] args) {
-		int[] num = {0, 8, 4, 12, 2, 10, 6, 14, 1, 9, 5, 13, 3, 11, 7, 15};
-		int[] prev = new int[num.length];
-		int[] next = new int[num.length + 1];
+		int[] x = { 0, 8, 4, 12, 2, 10, 6, 14, 1, 9, 5, 13, 3, 11, 7, 15 };
+		int[] p = new int[x.length];
+		int[] m = new int[x.length + 1];
 
 		int length = 0;
-		for (int i = 0; i < num.length; i++) {
-			// binary search for the largest positive mid <= L such that
-			// num[next[mid]] < num[i]
+		for (int i = 0; i < x.length; i++) {
+			// binary search for the largest positive mid <= length such that
+			// x[i] > x[m[mid]]
 			int low = 1, high = length;
 			while (low <= high) {
-				int mid = (low + high) >> 1;
-				if (num[next[mid]] < num[i])
+				int mid = low + high >> 1;
+				if (x[i] > x[m[mid]])
 					low = mid + 1;
 				else
 					high = mid - 1;
 			}
 
-			// After searching, low is 1 greater than the length of the longest
-			// prefix of num[i]
-			// The predecessor of num[i] is the last index of the subsequence of
+			// after searching, low is 1 greater than the length of the longest
+			// prefix of x[i]
+			// the predecessor of x[i] is the last index of the subsequence of
 			// length low - 1
-			prev[i] = next[low - 1];
-			next[low] = i;
+			p[i] = m[low - 1];
+			m[low] = i;
 
-			// If we found a subsequence longer than any we've found yet, update
+			// if we found a subsequence longer than any we've found yet, update
 			// length
 			length = Math.max(length, low);
 		}
 
-		// Reconstruct the longest increasing subsequence
-		int[] ans = new int[length];
-		int index = next[length];
+		// reconstruct the longest increasing subsequence
+		// if there are multiple subsequences, print the values that come later
+		// in the array x
+		int[] s = new int[length];
+		int k = m[length];
 		for (int i = length - 1; i >= 0; i--) {
-			ans[i] = num[index];
-			index = prev[index];
+			s[i] = x[k];
+			k = p[k];
 		}
 
-		System.out.println("num: " + Arrays.toString(num));
-		System.out.println("prev: " + Arrays.toString(prev));
-		System.out.println("next: " + Arrays.toString(next));
-		System.out.println("ans: " + Arrays.toString(ans));
+		System.out.println(length);
+		System.out.println(Arrays.toString(s));
 	}
 
 }
