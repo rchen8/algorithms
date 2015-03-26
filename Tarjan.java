@@ -16,11 +16,9 @@ public class Tarjan {
 	private static void tarjan() {
 		depth = 0;
 		s = new Stack<>();
-		for (int v : graph.keySet()) {
-			if (index[v] == -1) {
+		for (int v : graph.keySet())
+			if (index[v] == -1)
 				strongconnect(v);
-			}
-		}
 	}
 
 	private static void strongconnect(int v) {
