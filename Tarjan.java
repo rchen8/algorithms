@@ -23,10 +23,7 @@ public class Tarjan {
 
 	private static void strongconnect(int v) {
 		// Set the depth index for v to the smallest unused index
-		index[v] = depth;
-		lowlink[v] = depth;
-		depth++;
-
+		index[v] = lowlink[v] = depth++;
 		s.push(v);
 		onStack[v] = true;
 
@@ -45,12 +42,11 @@ public class Tarjan {
 		// If v is a root node, pop the stack and generate an SCC
 		if (lowlink[v] == index[v]) {
 			HashSet<Integer> scc = new HashSet<>();
-			int w;
-			do {
+			for (int w = -1; w != v;) {
 				w = s.pop();
 				onStack[w] = false;
 				scc.add(w);
-			} while (w != v);
+			}
 			System.out.println(scc);
 		}
 	}
