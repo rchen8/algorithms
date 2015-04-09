@@ -2,6 +2,20 @@ import java.util.Arrays;
 
 public class Matrix {
 
+	private static double determinant(double[][] matrix) {
+		if (matrix.length != matrix[0].length)
+			throw new IllegalStateException("invalid dimensions");
+
+		if (matrix.length == 2)
+			return matrix[0][0] * matrix[1][1] - matrix[0][1] * matrix[1][0];
+
+		double det = 0;
+		for (int i = 0; i < matrix[0].length; i++)
+			det += Math.pow(-1, i) * matrix[0][i]
+					* determinant(minor(matrix, 0, i));
+		return det;
+	}
+
 	private static double[][] inverse(double[][] matrix) {
 		double[][] inverse = new double[matrix.length][matrix.length];
 
@@ -24,6 +38,16 @@ public class Matrix {
 		return inverse;
 	}
 
+	private static double[][] minor(double[][] matrix, int row, int column) {
+		double[][] minor = new double[matrix.length - 1][matrix.length - 1];
+
+		for (int i = 0; i < matrix.length; i++)
+			for (int j = 0; i != row && j < matrix[i].length; j++)
+				if (j != column)
+					minor[i < row ? i : i - 1][j < column ? j : j - 1] = matrix[i][j];
+		return minor;
+	}
+
 	private static double[][] multiply(double[][] a, double[][] b) {
 		if (a[0].length != b.length)
 			throw new IllegalStateException("invalid dimensions");
@@ -41,37 +65,33 @@ public class Matrix {
 		return matrix;
 	}
 
-	private static double[][] minor(double[][] matrix, int row, int column) {
-		double[][] minor = new double[matrix.length - 1][matrix.length - 1];
+	private static double[][] transpose(double[][] matrix) {
+		double[][] transpose = new double[matrix[0].length][matrix.length];
 
 		for (int i = 0; i < matrix.length; i++)
-			if (i != row)
-				for (int j = 0; j < matrix[i].length; j++)
-					if (j != column)
-						minor[i < row ? i : i - 1][j < column ? j : j - 1] = matrix[i][j];
-		return minor;
-	}
-
-	private static double determinant(double[][] matrix) {
-		if (matrix.length != matrix[0].length)
-			throw new IllegalStateException("invalid dimensions");
-
-		if (matrix.length == 2)
-			return matrix[0][0] * matrix[1][1] - matrix[0][1] * matrix[1][0];
-
-		double det = 0;
-		for (int i = 0; i < matrix[0].length; i++)
-			det += Math.pow(-1, i) * matrix[0][i]
-					* determinant(minor(matrix, 0, i));
-		return det;
+			for (int j = 0; j < matrix[i].length; j++)
+				transpose[j][i] = matrix[i][j];
+		return transpose;
 	}
 
 	public static void main(String[] args) {
+		// example 1 - solving a system of equations
 		double[][] a = { { 1, 1, 1 }, { 0, 2, 5 }, { 2, 5, -1 } };
 		double[][] b = { { 6 }, { -4 }, { 27 } };
 
-		double[][] x = multiply(inverse(a), b);
-		for (double[] i : x)
+		double[][] matrix = multiply(inverse(a), b);
+		for (double[] i : matrix)
+			System.out.println(Arrays.toString(i));
+		System.out.println();
+
+		// example 2 - solving a normal equation for linear regression
+		double[][] x = { { 2104, 5, 1, 45 }, { 1416, 3, 2, 40 },
+				{ 1534, 3, 2, 30 }, { 852, 2, 1, 36 } };
+		double[][] y = { { 460 }, { 232 }, { 315 }, { 178 } };
+
+		matrix = multiply(
+				multiply(inverse(multiply(transpose(x), x)), transpose(x)), y);
+		for (double[] i : matrix)
 			System.out.println(Arrays.toString(i));
 	}
 
