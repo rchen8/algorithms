@@ -4,7 +4,7 @@ import java.util.Stack;
 
 public class PolishNotation {
 
-	private static boolean operator(String s) {
+	private static boolean isOperator(String s) {
 		return s.equals("+") || s.equals("-") || s.equals("*") || s.equals("/")
 				|| s.equals("%") || s.equals("^");
 	}
@@ -94,9 +94,13 @@ public class PolishNotation {
 		for (int i = infix.length - 1; i >= 0; i--) {
 			if (infix[i].matches("\\w+"))
 				queue.push(infix[i]);
-			else if (operator(infix[i])) {
+			else if (isOperator(infix[i])) {
 				while (!stack.isEmpty()
-						&& precedence(infix[i]) < precedence(stack.peek()))
+						&& (!infix[i].equals("^")
+								&& precedence(infix[i]) <= precedence(stack
+										.peek()) || infix[i].equals("^")
+								&& precedence(infix[i]) < precedence(stack
+										.peek())))
 					queue.push(stack.pop());
 				stack.push(infix[i]);
 			} else if (infix[i].equals(")"))
@@ -104,7 +108,7 @@ public class PolishNotation {
 			else if (infix[i].equals("(")) {
 				while (!stack.peek().equals(")"))
 					queue.push(stack.pop());
-				stack.pop(); // right parenthesis
+				stack.pop();
 			}
 		}
 
@@ -124,9 +128,13 @@ public class PolishNotation {
 		for (int i = 0; i < infix.length; i++) {
 			if (infix[i].matches("\\w+"))
 				queue.add(infix[i]);
-			else if (operator(infix[i])) {
+			else if (isOperator(infix[i])) {
 				while (!stack.isEmpty()
-						&& precedence(infix[i]) <= precedence(stack.peek()))
+						&& (!infix[i].equals("^")
+								&& precedence(infix[i]) <= precedence(stack
+										.peek()) || infix[i].equals("^")
+								&& precedence(infix[i]) < precedence(stack
+										.peek())))
 					queue.add(stack.pop());
 				stack.push(infix[i]);
 			} else if (infix[i].equals("("))
@@ -158,8 +166,13 @@ public class PolishNotation {
 		System.out.println(postfixToInfix("6 7 * 9 + 8 2 * -".split("\\s+"),
 				false));
 
+		System.out.println();
 		System.out.println(infixToPrefix("A + B * C - D".split("\\s+")));
 		System.out.println(infixToPostfix("A + B * C - D".split("\\s+")));
+
+		System.out.println();
+		System.out.println(infixToPrefix("A ^ B ^ C".split("\\s+")));
+		System.out.println(infixToPostfix("A ^ B ^ C".split("\\s+")));
 	}
 
 }
