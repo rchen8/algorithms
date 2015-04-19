@@ -97,9 +97,9 @@ public class PolishNotation {
 			else if (isOperator(infix[i])) {
 				while (!stack.isEmpty()
 						&& (!infix[i].equals("^")
-								&& precedence(infix[i]) <= precedence(stack
-										.peek()) || infix[i].equals("^")
 								&& precedence(infix[i]) < precedence(stack
+										.peek()) || infix[i].equals("^")
+								&& precedence(infix[i]) <= precedence(stack
 										.peek())))
 					queue.push(stack.pop());
 				stack.push(infix[i]);
