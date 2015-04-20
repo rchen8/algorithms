@@ -142,7 +142,7 @@ public class PolishNotation {
 			else if (infix[i].equals(")")) {
 				while (!stack.peek().equals("("))
 					queue.add(stack.pop());
-				stack.pop(); // left parenthesis
+				stack.pop();
 			}
 		}
 
