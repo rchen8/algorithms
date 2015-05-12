@@ -2,7 +2,7 @@ import java.util.LinkedList;
 import java.util.Queue;
 import java.util.Stack;
 
-public class PolishNotation {
+public class Polish {
 
 	private static boolean isOperator(String s) {
 		return s.equals("+") || s.equals("-") || s.equals("*") || s.equals("/")
