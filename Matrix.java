@@ -74,6 +74,40 @@ public class Matrix {
 		return transpose;
 	}
 
+	private static double[][] rref(double[][] matrix) {
+		double[][] rref = new double[matrix.length][];
+		for (int i = 0; i < matrix.length; i++)
+			rref[i] = Arrays.copyOf(matrix[i], matrix[i].length);
+
+		int r = 0;
+		for (int c = 0; c < rref[0].length && r < rref.length; c++) {
+			int j = r;
+			for (int i = r + 1; i < rref.length; i++)
+				if (Math.abs(rref[i][c]) > Math.abs(rref[j][c]))
+					j = i;
+			if (Math.abs(rref[j][c]) < 0.00001)
+				continue;
+
+			double[] temp = rref[j];
+			rref[j] = rref[r];
+			rref[r] = temp;
+
+			double s = 1.0 / rref[r][c];
+			for (j = 0; j < rref[0].length; j++)
+				rref[r][j] *= s;
+			for (int i = 0; i < rref.length; i++) {
+				if (i != r) {
+					double t = rref[i][c];
+					for (j = 0; j < rref[0].length; j++)
+						rref[i][j] -= t * rref[r][j];
+				}
+			}
+			r++;
+		}
+
+		return rref;
+	}
+
 	public static void main(String[] args) {
 		// example 1 - solving a system of equations
 		double[][] a = { { 1, 1, 1 }, { 0, 2, 5 }, { 2, 5, -1 } };
@@ -84,7 +118,14 @@ public class Matrix {
 			System.out.println(Arrays.toString(i));
 		System.out.println();
 
-		// example 2 - solving a normal equation for linear regression
+		// example 2 - example 1 using reduced row echelon form
+		a = { { 1, 1, 1, 6 }, { 0, 2, 5, -4 }, { 2, 5, -1, 27 } };
+		matrix = rref(a);
+		for (double[] i : matrix)
+			System.out.println(Arrays.toString(i));
+		System.out.println();
+
+		// example 3 - solving a normal equation for linear regression
 		double[][] x = { { 2104, 5, 1, 45 }, { 1416, 3, 2, 40 },
 				{ 1534, 3, 2, 30 }, { 852, 2, 1, 36 } };
 		double[][] y = { { 460 }, { 232 }, { 315 }, { 178 } };
