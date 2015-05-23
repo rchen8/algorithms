@@ -65,15 +65,6 @@ public class Matrix {
 		return matrix;
 	}
 
-	private static double[][] transpose(double[][] matrix) {
-		double[][] transpose = new double[matrix[0].length][matrix.length];
-
-		for (int i = 0; i < matrix.length; i++)
-			for (int j = 0; j < matrix[i].length; j++)
-				transpose[j][i] = matrix[i][j];
-		return transpose;
-	}
-
 	private static double[][] rref(double[][] matrix) {
 		double[][] rref = new double[matrix.length][];
 		for (int i = 0; i < matrix.length; i++)
@@ -106,6 +97,15 @@ public class Matrix {
 		}
 
 		return rref;
+	}
+
+	private static double[][] transpose(double[][] matrix) {
+		double[][] transpose = new double[matrix[0].length][matrix.length];
+
+		for (int i = 0; i < matrix.length; i++)
+			for (int j = 0; j < matrix[i].length; j++)
+				transpose[j][i] = matrix[i][j];
+		return transpose;
 	}
 
 	public static void main(String[] args) {
