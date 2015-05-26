@@ -1,5 +1,5 @@
 # Stanford University ACM Team Notebook
-Compiled by Jaehyun Park. The official notebook can be found [here](http://stanford.edu/~liszt90/acm/notebook.html).
+Compiled by [Jaehyun Park](http://web.stanford.edu/~liszt90/). The official notebook can be found [here](http://stanford.edu/~liszt90/acm/notebook.html).
 
 ### Combinatorial optimization
 Sparse max-flow (C++)  
