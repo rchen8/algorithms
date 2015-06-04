@@ -119,7 +119,7 @@ public class Matrix {
 		System.out.println();
 
 		// example 2 - example 1 using reduced row echelon form
-		a = { { 1, 1, 1, 6 }, { 0, 2, 5, -4 }, { 2, 5, -1, 27 } };
+		a = new double[][]{ { 1, 1, 1, 6 }, { 0, 2, 5, -4 }, { 2, 5, -1, 27 } };
 		matrix = rref(a);
 		for (double[] i : matrix)
 			System.out.println(Arrays.toString(i));
