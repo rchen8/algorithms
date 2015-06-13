@@ -4,8 +4,8 @@ public class BoyerMoore {
 		if (needle.length == 0)
 			return 0;
 
-		int charTable[] = makeCharTable(needle);
-		int offsetTable[] = makeOffsetTable(needle);
+		int[] charTable = makeCharTable(needle);
+		int[] offsetTable = makeOffsetTable(needle);
 		for (int i = needle.length - 1, j; i < haystack.length;) {
 			for (j = needle.length - 1; needle[j] == haystack[i]; i--, j--)
 				if (j == 0)
