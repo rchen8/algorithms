@@ -1,15 +1,15 @@
 public class RabinKarp {
 
 	private static final int BASE = 101;
-	private static final int MOD = 1_000_007;
+	private static final long MOD = 1_000_000_007;
 
 	private static int hash(String pattern) {
-		int hashCode = 0;
+		long hashCode = 0;
 		for (int i = 0; i < pattern.length(); i++)
 			hashCode += (pattern.charAt(i) * Math.round(Math.pow(BASE,
 					pattern.length() - i)))
 					% MOD;
-		return hashCode;
+		return (int) hashCode;
 	}
 
 	private static int rabinKarp(String s, String pattern) {
