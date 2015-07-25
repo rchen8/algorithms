@@ -28,14 +28,16 @@ public class Tarjan {
 		onStack[v] = true;
 
 		// Consider successors of v
-		for (int w : graph.get(v)) {
-			if (index[w] == -1) {
-				// Successor w has not yet been visited; recurse on it
-				strongconnect(w);
-				lowlink[v] = Math.min(lowlink[v], lowlink[w]);
-			} else if (onStack[w]) {
-				// Successor w is in stack s and hence in the current SCC
-				lowlink[v] = Math.min(lowlink[v], index[w]);
+		if (graph.containsKey(v)) {
+			for (int w : graph.get(v)) {
+				if (index[w] == -1) {
+					// Successor w has not yet been visited; recurse on it
+					strongconnect(w);
+					lowlink[v] = Math.min(lowlink[v], lowlink[w]);
+				} else if (onStack[w]) {
+					// Successor w is in stack s and hence in the current SCC
+					lowlink[v] = Math.min(lowlink[v], index[w]);
+				}
 			}
 		}
 
