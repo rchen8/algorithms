@@ -4,57 +4,56 @@ import java.util.LinkedList;
 
 public class EdmondsKarp {
 
-	private static HashMap<Integer, Integer> p;
-	private static int f, s, t;
+	private static HashMap<Integer, Integer> path;
+	private static int flow, source, sink;
 
-	private static HashMap<Integer, ArrayList<Integer>> AdjList;
-	private static int[][] AdjMat;
+	private static HashMap<Integer, ArrayList<Integer>> adjList;
+	private static int[][] adjMat;
 
 	private static void augmentPath(int v, int minEdge) {
-		if (v == s) {
-			f = minEdge;
+		if (v == source) {
+			flow = minEdge;
 			return;
-		} else if (p.containsKey(v)) {
-			augmentPath(p.get(v), Math.min(minEdge, AdjMat[p.get(v)][v]));
-			AdjMat[p.get(v)][v] -= f;
-			AdjMat[v][p.get(v)] += f;
+		} else if (path.containsKey(v)) {
+			augmentPath(path.get(v), Math.min(minEdge, adjMat[path.get(v)][v]));
+			adjMat[path.get(v)][v] -= flow;
+			adjMat[v][path.get(v)] += flow;
 		}
 	}
 
 	private static int edmondsKarp() {
-		int max_flow = 0;
+		int maxFlow = 0;
 		while (true) {
-			f = 0;
+			flow = 0;
 
-			LinkedList<Integer> q = new LinkedList<>();
+			LinkedList<Integer> bfs = new LinkedList<>();
 			HashMap<Integer, Integer> dist = new HashMap<>();
-			q.add(s);
-			dist.put(s, 0);
-			while (!q.isEmpty()) {
-				int u = q.remove();
-				if (u == t)
+			bfs.add(source);
+			dist.put(source, 0);
+			while (!bfs.isEmpty()) {
+				int u = bfs.remove();
+				if (u == sink)
 					break;
 
-				if (AdjList.containsKey(u)) {
-					for (int v : AdjList.get(u)) {
-						if (AdjMat[u][v] > 0 && !dist.containsKey(v)) {
+				if (adjList.containsKey(u)) {
+					for (int v : adjList.get(u)) {
+						if (adjMat[u][v] > 0 && !dist.containsKey(v)) {
 							dist.put(v, dist.get(u) + 1);
-															
-							q.add(v);
-							p.put(v, u);
-											
+
+							bfs.add(v);
+							path.put(v, u);
 						}
 					}
 				}
 			}
 
-			augmentPath(t, Integer.MAX_VALUE);
-			if (f == 0)
+			augmentPath(sink, Integer.MAX_VALUE);
+			if (flow == 0)
 				break;
-			max_flow += f;
+			maxFlow += flow;
 		}
 
-		return max_flow;
+		return maxFlow;
 	}
 
 	public static void main(String[] args) {
@@ -62,21 +61,21 @@ public class EdmondsKarp {
 		int[][] data = { { 1, 3, 5 }, { 3, 2, 2 }, { 3, 6, 6 }, { 4, 1, 5 },
 				{ 4, 6, 7 }, { 5, 1, 9 }, { 5, 4, 4 }, { 6, 2, 8 } };
 
-		AdjList = new HashMap<>();
-		AdjMat = new int[n + 1][n + 1];
+		adjList = new HashMap<>();
+		adjMat = new int[n + 1][n + 1];
 		for (int i = 0; i < data.length; i++) {
-			ArrayList<Integer> adj = AdjList.get(data[i][0]);
-			if (adj == null)
-				adj = new ArrayList<>();
-			adj.add(data[i][1]);
-			AdjList.put(data[i][0], adj);
+			ArrayList<Integer> list = adjList.get(data[i][0]);
+			if (list == null)
+				list = new ArrayList<>();
+			list.add(data[i][1]);
+			adjList.put(data[i][0], list);
 
-			AdjMat[data[i][0]][data[i][1]] = data[i][2];
+			adjMat[data[i][0]][data[i][1]] = data[i][2];
 		}
 
-		s = 5;
-		t = 2;
-		p = new HashMap<>();
+		source = 5;
+		sink = 2;
+		path = new HashMap<>();
 		System.out.println(edmondsKarp());
 	}
 
