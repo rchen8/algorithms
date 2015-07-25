@@ -2,7 +2,7 @@ import java.awt.Point;
 import java.util.Arrays;
 import java.util.Comparator;
 
-public class ConvexHull {
+public class QuickHull {
 
 	private static final int n = 11;
 

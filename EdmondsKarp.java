@@ -11,49 +11,45 @@ public class EdmondsKarp {
 	private static int[][] AdjMat;
 
 	private static void augmentPath(int v, int minEdge) {
-		if (v == s) { // managed to get back to source
-			f = minEdge; // minEdge of the path
+		if (v == s) {
+			f = minEdge;
 			return;
-		} else if (p.containsKey(v)) { // augment if there is a path
-			// we need AdjMat for fast lookup here
+		} else if (p.containsKey(v)) {
 			augmentPath(p.get(v), Math.min(minEdge, AdjMat[p.get(v)][v]));
-			AdjMat[p.get(v)][v] -= f; // forward edges -> decrease
-			AdjMat[v][p.get(v)] += f; // backward edges -> increase
+			AdjMat[p.get(v)][v] -= f;
+			AdjMat[v][p.get(v)] += f;
 		}
 	}
 
 	private static int edmondsKarp() {
 		int max_flow = 0;
-		while (true) { // this will be run max O(VE) times
+		while (true) {
 			f = 0;
 
-			// O(E) BFS and record path p
 			LinkedList<Integer> q = new LinkedList<>();
 			HashMap<Integer, Integer> dist = new HashMap<>();
 			q.add(s);
-			dist.put(s, 0); // start from source
+			dist.put(s, 0);
 			while (!q.isEmpty()) {
-				int u = q.remove(); // queue: layer by layer!
-				if (u == t) // modification 1: reach sink t, stop BFS
+				int u = q.remove();
+				if (u == t)
 					break;
 
 				if (AdjList.containsKey(u)) {
-					for (int v : AdjList.get(u)) { // for each neighbors of u
-						// modification 2: also check AdjMat as edges may
-						// disappear
+					for (int v : AdjList.get(u)) {
 						if (AdjMat[u][v] > 0 && !dist.containsKey(v)) {
-							dist.put(v, dist.get(u) + 1); // then v is reachable
-															// from u
-							q.add(v); // enqueue v for next steps
-							p.put(v, u); // modification 3: parent of v->first
-											// is u
+							dist.put(v, dist.get(u) + 1);
+															
+							q.add(v);
+							p.put(v, u);
+											
 						}
 					}
 				}
 			}
 
-			augmentPath(t, Integer.MAX_VALUE); // path augmentation in O(V)
-			if (f == 0) // seems that we cannot pass any more flow
+			augmentPath(t, Integer.MAX_VALUE);
+			if (f == 0)
 				break;
 			max_flow += f;
 		}
@@ -83,4 +79,5 @@ public class EdmondsKarp {
 		p = new HashMap<>();
 		System.out.println(edmondsKarp());
 	}
+
 }

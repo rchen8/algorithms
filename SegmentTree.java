@@ -16,18 +16,15 @@ public class SegmentTree {
 		if (low == high)
 			segmentTree[node] = type == RANGE_SUM ? array[low] : low;
 		else {
-			// recursively compute the values in the left and right subtrees
 			int lIndex = 2 * node, rIndex = 2 * node + 1;
 			int mid = low + high >> 1;
 			build(type, lIndex, low, mid);
 			build(type, rIndex, mid + 1, high);
-			int lContent = segmentTree[lIndex], rContent = segmentTree[rIndex];
 
+			int lContent = segmentTree[lIndex], rContent = segmentTree[rIndex];
 			if (type == RANGE_SUM) {
-				// make this segment contain sum of left and right subtree
 				segmentTree[node] = lContent + rContent;
 			} else {
-				// make this segment contain min/max of left and right subtree
 				int lValue = array[lContent], rValue = array[rContent];
 				if (type == RANGE_MIN)
 					segmentTree[node] = lValue <= rValue ? lContent : rContent;
@@ -38,20 +35,15 @@ public class SegmentTree {
 	}
 
 	private static int query(int type, int node, int low, int high, int i, int j) {
-		// if the current interval does not intersect query interval
 		if (i > high || j < low)
 			return -1;
-		// if the current interval is inside query interval
 		if (low >= i && high <= j)
 			return segmentTree[node];
 
-		// compute the minimum position in the left and right part of the
-		// interval
 		int mid = low + high >> 1;
 		int p1 = query(type, 2 * node, low, mid, i, j);
 		int p2 = query(type, 2 * node + 1, mid + 1, high, i, j);
 
-		// return the position where the overall minimum is
 		if (p1 == -1)
 			return p2;
 		if (p2 == -1)
@@ -79,10 +71,8 @@ public class SegmentTree {
 
 			int lContent = segmentTree[lIndex], rContent = segmentTree[rIndex];
 			if (type == RANGE_SUM) {
-				// make this segment contain sum of left and right subtree
 				segmentTree[node] = lContent + rContent;
 			} else {
-				// make this segment contain min/max of left and right subtree
 				int lValue = array[lContent], rValue = array[rContent];
 				if (type == RANGE_MIN)
 					segmentTree[node] = lValue <= rValue ? lContent : rContent;
