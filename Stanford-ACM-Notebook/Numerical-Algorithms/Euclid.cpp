@@ -18,8 +18,7 @@ int mod(int a, int b) {
 
 // computes gcd(a,b)
 int gcd(int a, int b) {
-  int tmp;
-  while(b){a%=b; tmp=a; a=b; b=tmp;}
+  while(b){a%=b; swap(a,b);}
   return a;
 }
 
